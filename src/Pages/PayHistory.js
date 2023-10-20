@@ -44,7 +44,7 @@ function PayHistory() {
     <>
       <Navbar />
       <Hero cName="hero-other" heroImg={payHistoryImg} title="Pay History Of Customers" />
-      <div className="container">
+      <div className="container mt-4 mb-4">
         <div className="row">
           <div className="col-md-12">
             <div className="table-responsive">
