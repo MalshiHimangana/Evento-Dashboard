@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
 import './Login.css';
+import supabase from '../config/supabaseClient';
 
 function Login() {
   const navigate = useNavigate(); // Initialize the navigate function

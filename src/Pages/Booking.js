@@ -4,6 +4,7 @@ import Hero from '../Components/Hero';
 import BookingImg from '../Assets/Bookings.jpg';
 import Navbar from '../Components/Navbar';
 import './Booking.css'
+import supabase from '../config/supabaseClient';
 
 function Booking() {
   //Dummy Data
