@@ -76,10 +76,11 @@ function Vendors() {
 
   const handleDeleteVendor = async (index, vendorID) => {
     try {
-      const { data, error } = await supabase.from('Vendors').delete().eq('Vendor ID', [`Vendor ID`]);
-
+      const { error } = await supabase.from('Vendors').delete().eq('Vendor ID', vendorID);
+  
       if (error) {
         setError('Failed to delete vendor.');
+        setSuccess('');
       } else {
         const updatedVendors = vendors.filter((_, i) => i !== index);
         setVendors(updatedVendors);
@@ -93,6 +94,7 @@ function Vendors() {
       setSuccess('');
     }
   };
+  
 
   return (
     <>
