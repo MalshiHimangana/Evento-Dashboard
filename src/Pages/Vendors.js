@@ -54,15 +54,7 @@ function Vendors() {
     }
   };
 
-  const handleDeleteVendor = async (index, vendorID) => {
-    try {
-      await supabase.from('Vendors').delete().eq('VendorID', vendorID);
-      const updatedVendors = vendors.filter((_, i) => i !== index);
-      setVendors(updatedVendors);
-    } catch (error) {
-      setError('Failed to delete vendor.');
-    }
-  };
+
 
   useEffect(() => {
     async function fetchVendors() {
@@ -81,6 +73,26 @@ function Vendors() {
 
     fetchVendors();
   }, []);
+
+  const handleDeleteVendor = async (index, vendorID) => {
+    try {
+      const { data, error } = await supabase.from('Vendors').delete().eq('Vendor ID', [`Vendor ID`]);
+
+      if (error) {
+        setError('Failed to delete vendor.');
+      } else {
+        const updatedVendors = vendors.filter((_, i) => i !== index);
+        setVendors(updatedVendors);
+        setSuccess('Vendor deleted successfully!');
+        setTimeout(() => {
+          setSuccess('');
+        }, 8000); // Clear success message after 8 seconds
+      }
+    } catch (error) {
+      setError('Failed to delete vendor.');
+      setSuccess('');
+    }
+  };
 
   return (
     <>
@@ -151,6 +163,7 @@ function Vendors() {
               <table className="table table-striped table-bordered table-hover">
                 <thead>
                   <tr>
+                   
                     <th>Vendor Name</th>
                     <th>Email</th>
                     <th>Contact Number</th>
@@ -162,19 +175,20 @@ function Vendors() {
                 <tbody>
                   {vendors.map((vendor, index) => (
                     <tr key={index}>
+                      
                       <td>{vendor.VendorsName}</td>
                       <td>{vendor.Email}</td>
                       <td>{vendor.ContatNo}</td>
                       <td>{vendor.V_Password}</td>
                       <td>{vendor.NIC}</td>
                       <td>
-                        <button
-                          className="btn btn-danger"
-                          onClick={() => handleDeleteVendor(index, vendor.VendorID)}
-                        >
-                          Delete
-                        </button>
-                      </td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteVendor(index, vendor.VendorID)}
+                  >
+                    Delete
+                  </button>
+                </td>
                     </tr>
                   ))}
                 </tbody>
