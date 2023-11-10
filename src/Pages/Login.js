@@ -1,20 +1,46 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
+import { useAuth } from '../Components/AuthContext'; // Update the path as needed
 import supabase from '../config/supabaseClient';
 
 function Login() {
-  const navigate = useNavigate(); // Initialize the navigate function
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const navigate = useNavigate();
+  const { user } = useAuth(); // Assuming the useAuth hook provides user details
+  const [formData, setFormData] = useState({ name: '', password: '' });
 
-  const handleLogin = () => {
-    // Replace this with your authentication logic. For now, we'll use dummy data.
-    if (formData.username === 'admin' && formData.password === '123') {
-      // Successful login; navigate to the dashboard page
-      navigate('/Dashboard');
-    } else {
-      // Invalid login
-      alert('Invalid credentials. Try "demo" and "password".');
+  const handleLogin = async () => {
+    try {
+      // Check if the user exists in the ADMIN_PANEL table
+      const { data, error } = await supabase
+        .from('ADMIN_PANEL')
+        .select('AdminId')
+        .eq('Name', formData.name)
+        .eq('Password', formData.password)
+        .single();
+
+      if (error) {
+        console.error('Error during login:', error.message);
+        throw new Error('An error occurred during login.');
+      }
+
+      if (data) {
+        // Successful login; navigate to the dashboard page
+        navigate('/Dashboard');
+        
+        // Assuming successful login updates the user context
+        // You can now check if the user details are available
+        if (user) {
+          console.log('User details saved:', user);
+        }
+      } else {
+        // Invalid login
+        throw new Error('Invalid credentials. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error during login:', error.message);
+      // Show an alert for any login errors
+      alert(error.message);
     }
   };
 
@@ -35,14 +61,14 @@ function Login() {
               <div className="card-body">
                 <form>
                   <div className="form-group">
-                    <label htmlFor="username">Username</label>
+                    <label htmlFor="name">Name</label>
                     <input
                       type="text"
                       className="form-control"
-                      id="username"
-                      name="username"
-                      placeholder="Enter your username"
-                      value={formData.username}
+                      id="name"
+                      name="name"
+                      placeholder="Enter your name"
+                      value={formData.name}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -58,7 +84,11 @@ function Login() {
                       onChange={handleInputChange}
                     />
                   </div>
-                  <button type="button" className="btn btn-primary btn-block" onClick={handleLogin}>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-block mt-2"
+                    onClick={handleLogin}
+                  >
                     Login
                   </button>
                 </form>
