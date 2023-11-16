@@ -7,7 +7,7 @@ import supabase from '../config/supabaseClient';
 
 function PayHistory() {
   const [payHistoryData, setPayHistoryData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchEmail, setSearchEmail] = useState('');
 
   useEffect(() => {
     // Fetch data from the 'Payment History' table in Supabase
@@ -34,13 +34,15 @@ function PayHistory() {
     fetchPayHistory();
   }, []); // Ensure the effect runs only once
 
+  
   const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
+    setSearchEmail(event.target.value);
   };
 
+
   const filteredData = payHistoryData.filter((payment) => {
-    // Filter by the last 4 digits of Payment ID
-    return payment['PaymentID'].endsWith(searchTerm);
+    // Filter by email
+    return payment['Email'].toLowerCase().includes(searchEmail.toLowerCase());
   });
 
   return (
@@ -50,13 +52,13 @@ function PayHistory() {
       <div className="container mt-4 mb-4">
         <div className="row">
           <div className="col-md-6 mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search by last 4 digits of Payment ID"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by Email"
+            value={searchEmail}
+            onChange={handleSearch}
+         />
           </div>
         </div>
         <div className="row">
