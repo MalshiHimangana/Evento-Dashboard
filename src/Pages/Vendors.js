@@ -11,17 +11,14 @@ function Vendors() {
   const [success, setSuccess] = useState('');
   const [vendorName, setVendorName] = useState('');
   const [nic, setNic] = useState('');
-  const [type, setType] = useState(''); 
+  const [type, setType] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [description, setDescription] = useState('');
 
-
-
-
   const handleAddVendor = async () => {
-    if (vendorName && nic && type && contactNo  && description) {
+    if (vendorName && nic && type && contactNo && description) {
       try {
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('Vendors')
           .insert([
             {
@@ -29,14 +26,25 @@ function Vendors() {
               NIC: nic,
               Type: type,
               ContactNo: contactNo,
-              Description: description, // Include description here
+              Description: description,
             },
           ]);
   
-        console.log('Data:', data);
-        console.error('Error:', error);
-  
-        // ... rest of the code
+        if (error) {
+          setError('Failed to add vendor.');
+          setSuccess('');
+        } else {
+          setVendorName('');
+          setNic('');
+          setType('');
+          setContactNo('');
+          setDescription('');
+          setError('');
+          setSuccess('Vendor added successfully!');
+          setTimeout(() => {
+            setSuccess('');
+          }, 8000); // Clear success message after 8 seconds
+        }
       } catch (error) {
         console.error('Catch Error:', error);
         setError('Failed to add vendor.');
@@ -47,6 +55,7 @@ function Vendors() {
       setSuccess('');
     }
   };
+  
 
   return (
     <>
@@ -87,7 +96,7 @@ function Vendors() {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
-                 <option value="">Select a Type</option>
+                <option value="">Select a Type</option>
                 <option value="Photography">Photography</option>
                 <option value="Venue">Venue</option>
                 <option value="Sound">Sound</option>
@@ -104,10 +113,10 @@ function Vendors() {
             </div>
             <div className="form-group">
               <label>Description</label>
-               <textarea
+              <textarea
                 className="form-control"
                 value={description}
-               onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </div>
             <button className="btn btn-primary mt-3 mb-4" onClick={handleAddVendor}>
