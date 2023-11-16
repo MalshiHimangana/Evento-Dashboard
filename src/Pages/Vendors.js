@@ -11,7 +11,7 @@ function Vendors() {
   const [success, setSuccess] = useState('');
   const [vendorName, setVendorName] = useState('');
   const [nic, setNic] = useState('');
-  const [type, setType] = useState(''); // Default value is 'Photography'
+  const [type, setType] = useState(''); 
   const [contactNo, setContactNo] = useState('');
   const [description, setDescription] = useState('');
 
@@ -87,6 +87,7 @@ function Vendors() {
                 value={type}
                 onChange={(e) => setType(e.target.value)}
               >
+                 <option value="">Select a Type</option>
                 <option value="Photography">Photography</option>
                 <option value="Venue">Venue</option>
                 <option value="Sound">Sound</option>
