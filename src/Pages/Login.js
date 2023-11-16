@@ -1,98 +1,84 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
-import { useAuth } from '../Components/AuthContext'; // Update the path as needed
+import { useAuth } from '../Components/AuthContext';
 import supabase from '../config/supabaseClient';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  const { loginUser } = useAuth();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const { user } = useAuth(); // Assuming the useAuth hook provides user details
-  const [formData, setFormData] = useState({ name: '', password: '' });
 
   const handleLogin = async () => {
-    try {
-      // Check if the user exists in the ADMIN_PANEL table
-      const { data, error } = await supabase
-        .from('ADMIN_PANEL')
-        .select('AdminId')
-        .eq('Name', formData.name)
-        .eq('Password', formData.password)
-        .single();
+    // Query the ADMIN_PANEL table for matching records
+    const { data, error } = await supabase
+      .from('ADMIN_PANEL')
+      .select('*')
+      .eq('Name', username)
+      .eq('Password', password);
 
-      if (error) {
-        console.error('Error during login:', error.message);
-        throw new Error('An error occurred during login.');
-      }
+    if (error) {
+      console.error('Error querying Supabase:', error.message);
+      return;
+    }
 
-      if (data) {
-        // Successful login; navigate to the dashboard page
-        navigate('/Dashboard');
-        
-        // Assuming successful login updates the user context
-        // You can now check if the user details are available
-        if (user) {
-          console.log('User details saved:', user);
-        }
-      } else {
-        // Invalid login
-        throw new Error('Invalid credentials. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error during login:', error.message);
-      // Show an alert for any login errors
-      alert(error.message);
+    // If matching records are found, log in the user
+    if (data && data.length > 0) {
+      // Assuming the user data includes 'name' and 'adminId'
+      const userData = {
+        name: data[0].Name,
+        adminId: data[0].AdminId,
+      };
+
+      loginUser(userData);
+
+      console.log('User data stored in local storage:', userData);
+      navigate('/Dashboard');
+
+     
+    } else {
+      console.log('Invalid credentials. Please try again.');
+      // You may want to display an error message to the user
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
 
   return (
-    <div className="login-page">
-      <div className="container">
-        <div className="row justify-content-center align-items-center min-vh-100">
-          <div className="col-md-6">
-            <div className="card">
-              <div className="card-header">
-                <h3>Login</h3>
-              </div>
-              <div className="card-body">
-                <form>
-                  <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name"
-                      name="name"
-                      placeholder="Enter your name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="password"
-                      name="password"
-                      placeholder="Enter your password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-block mt-2"
-                    onClick={handleLogin}
-                  >
-                    Login
-                  </button>
-                </form>
-              </div>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-body">
+              <h2 className="text-center mb-4">Login</h2>
+              <form>
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label">
+                    Username:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    Password:
+                  </label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <button type="button" className="btn btn-primary" onClick={handleLogin}>
+                  Login
+                </button>
+              </form>
             </div>
           </div>
         </div>

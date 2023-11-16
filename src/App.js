@@ -9,7 +9,7 @@ import PayHistory from './Pages/PayHistory';
 function App() {
   return (
 
-   <dvi className="App">
+   <div className="App">
 
       <Routes>
        <Route path="/" element={ <Login/>}/>
@@ -20,7 +20,7 @@ function App() {
        
       </Routes>
 
-   </dvi>
+   </div>
     
   );
 }
