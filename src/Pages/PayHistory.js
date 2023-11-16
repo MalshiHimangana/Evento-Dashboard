@@ -14,9 +14,9 @@ function PayHistory() {
     const fetchPayHistory = async () => {
       try {
         const { data, error } = await supabase
-          .from('Payment History')
+          .from('PaymentHistory')
           .select('*')
-          .order('Payment Date', { ascending: false }) // Order by Payment Date, latest first
+          .order('PaymentDate', { ascending: false }) // Order by Payment Date, latest first
           .limit(10); // Limit the results to 10 records
 
         if (error) {
@@ -40,7 +40,7 @@ function PayHistory() {
 
   const filteredData = payHistoryData.filter((payment) => {
     // Filter by the last 4 digits of Payment ID
-    return payment['Payment ID'].endsWith(searchTerm);
+    return payment['PaymentID'].endsWith(searchTerm);
   });
 
   return (
