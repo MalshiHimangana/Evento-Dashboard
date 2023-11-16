@@ -73,6 +73,7 @@ function PayHistory() {
                     <th>Payment Date</th>
                     <th>Balance</th>
                     <th>Booking ID</th>
+                    <th>Email</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -84,6 +85,7 @@ function PayHistory() {
                       <td>{payment['Payment Date']}</td>
                       <td>{payment.Balance}</td>
                       <td>{payment['Booking ID']}</td>
+                      <td>{payment.Email}</td>
                       {/* Add other table data as needed */}
                     </tr>
                   ))}
