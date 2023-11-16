@@ -4,6 +4,7 @@ import Hero from '../Components/Hero';
 import VendorImg from '../Assets/Vendors.jpg';
 import Navbar from '../Components/Navbar';
 import supabase from '../config/supabaseClient';
+import VendorTable from '../Components/VendorTable';
 
 function Vendors() {
   const [vendors, setVendors] = useState([]);
@@ -125,6 +126,7 @@ function Vendors() {
           </div>
         </div>
       </div>
+      <VendorTable/>
       <Footer />
     </>
   );
