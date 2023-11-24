@@ -4,6 +4,7 @@ import Footer from '../Components/Footer';
 import Hero from '../Components/Hero';
 import PackagesImg from '../Assets/Packages.jpg';
 import supabase from '../config/supabaseClient';
+import PackageTable from '../Components/PackageTable';
 
 function Package() {
   const initialFormData = {
@@ -201,6 +202,7 @@ function Package() {
         </form>
       </div>
 
+      <PackageTable/>
       <Footer />
     </>
   );
