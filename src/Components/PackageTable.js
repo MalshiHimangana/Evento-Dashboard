@@ -43,7 +43,7 @@ function PackageTable() {
 
   return (
     <div>
-      <table className="table mt-5">
+      <table className="table">
         <thead>
           <tr>
             <th>Package Name</th>

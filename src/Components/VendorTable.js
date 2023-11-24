@@ -25,7 +25,6 @@ function VendorTable() {
 
   return (
     <div className="table-responsive">
-      <h2>Vendor Table</h2>
       {error && <p className="text-danger">{error}</p>}
       <table className="table table-striped table-bordered table-hover">
         <thead className="thead-dark">

@@ -198,7 +198,7 @@ function Package() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary mb-5">Submit</button>
         </form>
       </div>
 
