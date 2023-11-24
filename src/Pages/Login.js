@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../Components/AuthContext';
 import supabase from '../config/supabaseClient';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'
 
 function Login() {
   const { loginUser } = useAuth();
@@ -86,5 +87,6 @@ function Login() {
     </div>
   );
 }
+
 
 export default Login;
