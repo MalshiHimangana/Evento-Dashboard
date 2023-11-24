@@ -25,11 +25,19 @@ export const  Menuitems = [
   
    
     {
-       title : "Pay Hisoty",
+       title : "Pay History",
        url : "/PayHistory",
        cName : "nav-links",
        icon : "fa-solid fa-address-book"
     },
+
+    {
+      title : "Packages",
+      url : "/Package",
+      cName : "nav-links",
+      icon : "fa fa-archive"
+   },
+
 
     {
       title : "Sign Out",
