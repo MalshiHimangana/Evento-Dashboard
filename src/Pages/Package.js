@@ -7,7 +7,7 @@ import supabase from '../config/supabaseClient';
 
 function Package() {
   const [formData, setFormData] = useState({
-    package_name: '',
+    pacakge_name: '',
     PackageType: '',
     Package_price: '',
     Details: '',
@@ -15,7 +15,7 @@ function Package() {
     More: '',
     Image_Url: '',
     more_card_hedder: '',
-    package_features: '',
+    package_featues: '',
   });
 
   const handleChange = (e) => {
@@ -28,14 +28,35 @@ function Package() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Assuming 'packages' is the name of your Supabase table
-    const { data, error } = await supabase.from('packages').insert([formData]);
+    // Convert the package_features field to a JSON object
+    const formattedData = {
+      ...formData,
+      pacakge_name:formData.pacakge_name,
+      PackageType: formData.PackageType,
+      Package_price : formData.Package_price,
+      Details : formData.Details,
+      E_DiScription_Detaiels_headder: formData.E_DiScription_Detaiels_headder,
+      More:formData.More,
+      Image_Url:formData.Image_Url,
+      more_card_hedder: formData.more_card_hedder,
+      package_featues:formData.Details,
+      package_featues: formData.package_featues,
+      
+    };
 
-    if (error) {
-      console.error('Error adding package:', error.message);
-    } else {
+    try {
+      // Assuming 'packages' is the name of your Supabase table
+      const { data, error } = await supabase.from('Packages').insert([formattedData]);
+
+      if (error) {
+        throw error;
+      }
+
       console.log('Package added successfully:', data);
       // You can redirect the user or perform any other action upon successful submission
+
+    } catch (error) {
+      console.error('Error adding package:', error.message);
     }
   };
 
@@ -53,8 +74,8 @@ function Package() {
               className="form-control"
               id="packageName"
               placeholder="Enter package name"
-              name="package_name"
-              value={formData.package_name}
+              name="pacakge_name"
+              value={formData.pacakge_name}
               onChange={handleChange}
               required
             />
@@ -76,7 +97,7 @@ function Package() {
               {/* Add more options as needed */}
             </select>
           </div>
-          
+
           <div className="mb-3">
             <label htmlFor="packagePrice" className="form-label">Package Price</label>
             <input
@@ -163,10 +184,10 @@ function Package() {
             <label htmlFor="packageFeatures" className="form-label">Package Features (JSON)</label>
             <textarea
               className="form-control"
-              id="packageFeatures"
+              id="package_featues"
               placeholder="Enter package features in JSON format"
-              name="package_features"
-              value={formData.package_features}
+              name="package_featues"
+              value={formData.package_featues}
               onChange={handleChange}
               required
             />
