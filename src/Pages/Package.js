@@ -6,7 +6,7 @@ import PackagesImg from '../Assets/Packages.jpg';
 import supabase from '../config/supabaseClient';
 
 function Package() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     pacakge_name: '',
     PackageType: '',
     Package_price: '',
@@ -16,7 +16,9 @@ function Package() {
     Image_Url: '',
     more_card_hedder: '',
     package_featues: '',
-  });
+  };
+  
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
     setFormData({
@@ -54,9 +56,11 @@ function Package() {
 
       console.log('Package added successfully:', data);
       // You can redirect the user or perform any other action upon successful submission
+      setFormData(initialFormData);
 
     } catch (error) {
       console.error('Error adding package:', error.message);
+      setFormData(initialFormData);
     }
   };
 
