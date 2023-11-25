@@ -55,12 +55,12 @@ function Package() {
         throw error;
       }
 
-      console.log('Package added successfully:', data);
+      alert('Package added successfully:', data);
       // You can redirect the user or perform any other action upon successful submission
       setFormData(initialFormData);
 
     } catch (error) {
-      console.error('Error adding package:', error.message);
+      alert('Error adding package:', error.message);
       setFormData(initialFormData);
     }
   };

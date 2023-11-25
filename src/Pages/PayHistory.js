@@ -83,7 +83,6 @@ function PayHistory() {
                       <td>${payment.Value}</td>
                       <td>{payment['Payment Type']}</td>
                       <td>{payment['Payment Date']}</td>
-                      <td>{payment.Balance}</td>
                       <td>{payment['Booking ID']}</td>
                       <td>{payment.Email}</td>
                       {/* Add other table data as needed */}

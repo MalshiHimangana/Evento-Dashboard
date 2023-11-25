@@ -1,0 +1,31 @@
+/* Add this to your Login.css file or style component */
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../Assets//Login.jpg') center/cover;
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    /* Add other styling as needed */
+  }
+  
+  .login-card-body {
+    padding: 20px;
+  }
+  
+  .login-form-label {
+    font-weight: bold;
+    font-size: larger;
+    color: #fff;
+  }
+  
+  .login-btn-primary {
+    margin-top: 10px;
+    width: 100%;
+  }
+  

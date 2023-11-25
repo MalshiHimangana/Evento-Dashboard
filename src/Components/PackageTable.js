@@ -49,7 +49,6 @@ function PackageTable() {
             <th>Package Name</th>
             <th>Package Type</th>
             <th>Package Price</th>
-            {/* Add more columns as needed */}
             <th>Action</th>
           </tr>
         </thead>

@@ -11,9 +11,14 @@ function Dashboard() {
     <>
     <Navbar/>
     <Hero
-    cName = "hero-other"
+    cName = "hero"
     heroImg = {Evento}
     title = "Manage All Ongoing Process With Evento Dashboard"
+    text = "Start with Evento"
+    url = "/Booking"
+    btnClass ="homeBtn"
+    btnText ="Start"
+
     />
 
     <h3 className='mt-2'>Available Vendors </h3>
