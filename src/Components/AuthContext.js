@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Create a context for authentication
+// Context for authentication
 const AuthContext = createContext();
 
 // Custom hook to use the AuthContext
@@ -12,13 +12,13 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // Function to set the user and save it to local storage
+  // set the user and save it to local storage
   const loginUser = (userData) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
-  // Function to log out the user and remove from local storage
+  //  log out the user and remove from local storage
   const logoutUser = () => {
     setUser(null);
     localStorage.removeItem('user');
