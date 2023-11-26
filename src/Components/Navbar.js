@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import { Menuitems } from './Menuitems';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../Components/AuthContext'; 
 
 const Navbar = () => {
-  const { user, logoutUser } = useAuth(); // Assuming useAuth provides user and logoutUser
 
   const [clicked, setClicked] = useState(false);
 
@@ -29,14 +27,7 @@ const Navbar = () => {
               </Link>
             </li>
           ))}
-          {user && (
-            <li>
-              <button className="nav-links" onClick={logoutUser}>
-                <i className="fa fa-sign-out"></i>
-                Sign Out
-              </button>
-            </li>
-          )}
+          
         </ul>
       </nav>
     </div>
