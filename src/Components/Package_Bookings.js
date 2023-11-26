@@ -34,7 +34,7 @@ function Package_Bookings() {
     };
 
     fetchPackageBookings();
-  }, []); // Ensure the effect runs only once
+  }, []); 
 
   // Function to fetch package data based on PackageID
   const fetchPackageData = async (packageID) => {
@@ -78,7 +78,7 @@ function Package_Bookings() {
 
   return (
     <div>
-      <h2>Package Bookings</h2>
+     
       <table className="table table-striped">
         <thead>
           <tr>
@@ -93,7 +93,7 @@ function Package_Bookings() {
           {packageBookings.map((booking) => (
             <tr key={booking.BookingID}>
               <td>{booking.BookingID}</td>
-              <td>{booking.packageData?.package_name}</td>
+              <td>{booking.packageData?.pacakge_name}</td>
               <td>{booking.packageData?.PackageType}</td>
               <td>{booking.packageData?.Package_price}</td>
               <td>{booking.bookingEventData?.BookingDate}</td>

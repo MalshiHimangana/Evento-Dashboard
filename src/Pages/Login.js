@@ -38,8 +38,8 @@ function Login() {
 
      
     } else {
-      console.log('Invalid credentials. Please try again.');
-      // You may want to display an error message to the user
+      alert('Invalid credentials. Please try again.');
+     
     }
   };
 
