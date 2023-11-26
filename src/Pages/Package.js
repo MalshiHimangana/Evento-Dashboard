@@ -97,8 +97,9 @@ function Package() {
               required
             >
               <option value="" disabled>Select Package Type</option>
-              <option value="Birthday Party">Birthday Party</option>
-              <option value="Weddings">Weddings</option>
+              <option value="BIRTHDAY PARTY">BIRTHDAY PARTY</option>
+              <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+              <option value="WEDDINGS">WEDDINGS</option>
               {/* Add more options as needed */}
             </select>
           </div>
