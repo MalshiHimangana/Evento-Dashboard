@@ -26,7 +26,7 @@
 
 .Navbar-logo:hover{
 
-    color: #01959a;
+    color: #053133;
     text-decoration: none;
 }
 
@@ -61,7 +61,7 @@
 
 .nav-links:hover{
 
-    background-color: #01959a;
+    background-color:#053133;
     color: #fff;
     border-radius: 4px;
     transition: all 0.2s ease-in-out;

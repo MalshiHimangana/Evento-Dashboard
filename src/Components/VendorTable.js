@@ -23,9 +23,24 @@ function VendorTable() {
     fetchVendors();
   }, []);
 
+  const handleDelete = async (vendorId) => {
+    try {
+      // Perform the deletion in the database
+      const { error } = await supabase.from('Vendors').delete().eq('Vendor_ID', vendorId);
+
+      if (error) {
+        setError('Failed to delete vendor.');
+      } else {
+        // Update the local state after successful deletion
+        setVendors((prevVendors) => prevVendors.filter((vendor) => vendor.Vendor_ID !== vendorId));
+      }
+    } catch (error) {
+      setError('Failed to delete vendor.');
+    }
+  };
+
   return (
     <div className="table-responsive">
-      <h2>Vendor Table</h2>
       {error && <p className="text-danger">{error}</p>}
       <table className="table table-striped table-bordered table-hover">
         <thead className="thead-dark">
@@ -34,6 +49,7 @@ function VendorTable() {
             <th>Type</th>
             <th>Contact No</th>
             <th>NIC</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +59,14 @@ function VendorTable() {
               <td>{vendor.Type}</td>
               <td>{vendor.ContactNo}</td>
               <td>{vendor.NIC}</td>
+              <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => handleDelete(vendor.Vendor_ID)}
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -7,17 +7,17 @@ import supabase from '../config/supabaseClient';
 
 function PayHistory() {
   const [payHistoryData, setPayHistoryData] = useState([]);
-  const [searchEmail, setSearchEmail] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    // Fetch data from the 'Payment History' table in Supabase
+   
     const fetchPayHistory = async () => {
       try {
         const { data, error } = await supabase
           .from('PaymentHistory')
           .select('*')
-          .order('PaymentDate', { ascending: false }) // Order by Payment Date, latest first
-          .limit(10); // Limit the results to 10 records
+          .order('PaymentDate', { ascending: false }) 
+          .limit(10); 
 
         if (error) {
           throw error;
@@ -32,17 +32,16 @@ function PayHistory() {
     };
 
     fetchPayHistory();
-  }, []); // Ensure the effect runs only once
+  }, []); 
 
-  
   const handleSearch = (event) => {
-    setSearchEmail(event.target.value);
+    setSearchTerm(event.target.value);
   };
 
-
   const filteredData = payHistoryData.filter((payment) => {
-    // Filter by email
-    return payment['Email'].toLowerCase().includes(searchEmail.toLowerCase());
+    // Filter by the last 4 digits of BookingID
+    const lastFourDigits = payment.BookingID.slice(-4);
+    return lastFourDigits.includes(searchTerm);
   });
 
   return (
@@ -50,15 +49,15 @@ function PayHistory() {
       <Navbar />
       <Hero cName="hero-other" heroImg={payHistoryImg} title="Pay History Of Customers" />
       <div className="container mt-4 mb-4">
-        <div className="row">
+       <div className="row">
           <div className="col-md-6 mb-3">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Search by Email"
-            value={searchEmail}
-            onChange={handleSearch}
-         />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Search by Last 4 Digits of BookingID"
+              value={searchTerm}
+              onChange={handleSearch}
+            />
           </div>
         </div>
         <div className="row">
@@ -71,22 +70,17 @@ function PayHistory() {
                     <th>Value</th>
                     <th>Payment Type</th>
                     <th>Payment Date</th>
-                    <th>Balance</th>
                     <th>Booking ID</th>
-                    <th>Email</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredData.map((payment, index) => (
                     <tr key={index}>
-                      <td>{payment['Payment ID']}</td>
+                      <td>{payment.PaymentID}</td>
                       <td>${payment.Value}</td>
-                      <td>{payment['Payment Type']}</td>
-                      <td>{payment['Payment Date']}</td>
-                      <td>{payment.Balance}</td>
-                      <td>{payment['Booking ID']}</td>
-                      <td>{payment.Email}</td>
-                      {/* Add other table data as needed */}
+                      <td>{payment.PaymentType}</td>
+                      <td>{payment.PaymentDate}</td>
+                      <td>{payment.BookingID}</td>
                     </tr>
                   ))}
                 </tbody>

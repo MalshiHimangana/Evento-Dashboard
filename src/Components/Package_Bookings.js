@@ -17,11 +17,12 @@ function Package_Bookings() {
         }
 
         if (data) {
-          // For each booking, fetch related package data from 'Packages' table
+          // For each booking, fetch related package and booking event data
           const bookingsWithPackagesData = await Promise.all(
             data.map(async (booking) => {
               const packageData = await fetchPackageData(booking.PackageID);
-              return { ...booking, packageData };
+              const bookingEventData = await fetchBookingEventData(booking.BookingID);
+              return { ...booking, packageData, bookingEventData };
             })
           );
 
@@ -33,7 +34,7 @@ function Package_Bookings() {
     };
 
     fetchPackageBookings();
-  }, []); // Ensure the effect runs only once
+  }, []); 
 
   // Function to fetch package data based on PackageID
   const fetchPackageData = async (packageID) => {
@@ -55,9 +56,29 @@ function Package_Bookings() {
     }
   };
 
+  // Function to fetch BookingDate based on BookingID
+  const fetchBookingEventData = async (bookingID) => {
+    try {
+      const { data, error } = await supabase
+        .from('BookingEvents')
+        .select('BookingDate')
+        .eq('BookingID', bookingID)
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error fetching booking event data:', error.message);
+      return null;
+    }
+  };
+
   return (
     <div>
-      <h2>Package Bookings</h2>
+     
       <table className="table table-striped">
         <thead>
           <tr>
@@ -65,6 +86,7 @@ function Package_Bookings() {
             <th>Package Name</th>
             <th>Package Type</th>
             <th>Package Price</th>
+            <th>Booking Date</th>
           </tr>
         </thead>
         <tbody>
@@ -74,6 +96,7 @@ function Package_Bookings() {
               <td>{booking.packageData?.pacakge_name}</td>
               <td>{booking.packageData?.PackageType}</td>
               <td>{booking.packageData?.Package_price}</td>
+              <td>{booking.bookingEventData?.BookingDate}</td>
             </tr>
           ))}
         </tbody>

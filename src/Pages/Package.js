@@ -4,9 +4,10 @@ import Footer from '../Components/Footer';
 import Hero from '../Components/Hero';
 import PackagesImg from '../Assets/Packages.jpg';
 import supabase from '../config/supabaseClient';
+import PackageTable from '../Components/PackageTable';
 
 function Package() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     pacakge_name: '',
     PackageType: '',
     Package_price: '',
@@ -16,7 +17,9 @@ function Package() {
     Image_Url: '',
     more_card_hedder: '',
     package_featues: '',
-  });
+  };
+  
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
     setFormData({
@@ -52,11 +55,13 @@ function Package() {
         throw error;
       }
 
-      console.log('Package added successfully:', data);
+      alert('Package added successfully:', data);
       // You can redirect the user or perform any other action upon successful submission
+      setFormData(initialFormData);
 
     } catch (error) {
-      console.error('Error adding package:', error.message);
+      alert('Error adding package:', error.message);
+      setFormData(initialFormData);
     }
   };
 
@@ -92,8 +97,9 @@ function Package() {
               required
             >
               <option value="" disabled>Select Package Type</option>
-              <option value="Birthday Party">Birthday Party</option>
-              <option value="Weddings">Weddings</option>
+              <option value="BIRTHDAY PARTY">BIRTHDAY PARTY</option>
+              <option value="PHOTOGRAPHY">PHOTOGRAPHY</option>
+              <option value="WEDDINGS">WEDDINGS</option>
               {/* Add more options as needed */}
             </select>
           </div>
@@ -193,10 +199,11 @@ function Package() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary">Submit</button>
+          <button type="submit" className="btn btn-primary mb-5">Submit</button>
         </form>
       </div>
 
+      <PackageTable/>
       <Footer />
     </>
   );
