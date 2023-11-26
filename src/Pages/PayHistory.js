@@ -39,8 +39,8 @@ function PayHistory() {
   };
 
   const filteredData = payHistoryData.filter((payment) => {
-    // Filter by the last 4 digits of PaymentID
-    const lastFourDigits = payment.PaymentID.slice(-4);
+    // Filter by the last 4 digits of BookingID
+    const lastFourDigits = payment.BookingID.slice(-4);
     return lastFourDigits.includes(searchTerm);
   });
 
@@ -49,12 +49,12 @@ function PayHistory() {
       <Navbar />
       <Hero cName="hero-other" heroImg={payHistoryImg} title="Pay History Of Customers" />
       <div className="container mt-4 mb-4">
-        <div className="row">
+       <div className="row">
           <div className="col-md-6 mb-3">
             <input
               type="text"
               className="form-control"
-              placeholder="Search by Last 4 Digits of PaymentID"
+              placeholder="Search by Last 4 Digits of BookingID"
               value={searchTerm}
               onChange={handleSearch}
             />
