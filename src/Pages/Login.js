@@ -29,7 +29,7 @@ function Login() {
       return;
     }
   
-    // If matching records are found, log in the user
+    // If matching records are found, log the user and navigate to dashboard
     if (data && data.length > 0) {
       // Assuming the user data includes 'name' and 'adminId'
       const userData = {
