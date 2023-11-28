@@ -17,7 +17,24 @@ function Vendors() {
   const [description, setDescription] = useState('');
 
   const handleAddVendor = async () => {
-    if (vendorName && nic && type && contactNo && description) {
+   
+
+     if (vendorName && nic && type && contactNo && description) {
+        // Validate NIC format
+        const nicRegex = /^[0-9]{12}$/;
+      if (!nicRegex.test(nic)) {
+        setError('Invalid NIC format. Please enter a valid NIC with 12 digits.');
+        setSuccess('');
+        return;
+      }
+
+      const contactNoRegex = /^[0-9]{10}$/;
+      if (!contactNoRegex.test(contactNo)) {
+        setError('Invalid Contact Number format. Please enter a valid number with 10 digits.');
+        setSuccess('');
+        return;
+      }
+      
       try {
         const { error } = await supabase
           .from('Vendors')
